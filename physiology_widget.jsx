@@ -202,6 +202,227 @@ const DATA = [
 
 const CATS = ["All", ...Object.keys(CAT_COLORS)];
 
+const DETAIL_REFLEXES = [
+  { name: "Stretch reflex (phasic)", sys: "Spinal", receptor: "Muscle spindle (primary endings)", center: "Spinal cord (monosynaptic)", nucleus: "Alpha motor neurons (anterior horn)", stimulus: "Sudden stretch of muscle", response: "Rapid contraction of the stretched muscle", purpose: "Opposes sudden changes in muscle length; smooths movement" },
+  { name: "Stretch reflex (tonic)", sys: "Spinal", receptor: "Muscle spindle (primary & secondary endings)", center: "Spinal cord", nucleus: "Alpha & gamma motor neurons (anterior horn)", stimulus: "Sustained stretch of muscle", response: "Sustained muscle contraction", purpose: "Maintenance of muscle tone and stable posture" },
+  { name: "Inverse stretch reflex", sys: "Spinal", receptor: "Golgi tendon organ (GTO)", center: "Spinal cord (disynaptic)", nucleus: "Ib inhibitory interneurons (anterior horn)", stimulus: "Strong stretch or active muscle contraction", response: "Inhibition/relaxation of the agonist muscle", purpose: "Protects muscle and tendon from excessive tension" },
+  { name: "Withdrawal (flexor) reflex", sys: "Spinal", receptor: "Nociceptors (pain receptors)", center: "Spinal cord (polysynaptic)", nucleus: "Flexor reflex interneurons (dorsal horn -> anterior horn)", stimulus: "Noxious or painful stimulus", response: "Flexion of the stimulated limb", purpose: "Protective withdrawal from injury-causing stimuli" },
+  { name: "Crossed extensor reflex", sys: "Spinal", receptor: "Nociceptors", center: "Spinal cord (polysynaptic)", nucleus: "Commissural interneurons crossing midline (anterior horn)", stimulus: "Strong painful stimulus to a limb", response: "Extension of the opposite limb", purpose: "Supports body weight and pushes body away from stimulus" },
+  { name: "Positive supporting reaction", sys: "Spinal", receptor: "Tactile receptors in footpad", center: "Spinal cord", nucleus: "Extensor motor neurons (anterior horn)", stimulus: "Pressure applied to the footpad", response: "Limb extension against the applied pressure", purpose: "Helps stiffen limbs to support body weight against gravity" },
+  { name: "Negative supporting reaction", sys: "Spinal", receptor: "Proprioceptors in extensor muscles", center: "Spinal cord", nucleus: "Ib inhibitory interneurons; Renshaw cells", stimulus: "Sustained stretch of extensor muscles", response: "Active relaxation of the extensor muscles", purpose: "Allows for the disengagement of static standing" },
+  { name: "Mass reflex", sys: "Spinal", receptor: "Nociceptors or pelvic viscera stretch receptors", center: "Spinal cord", nucleus: "Isolated spinal interneuron pools (below lesion level)", stimulus: "Intense pain or overdistension of bladder/gut", response: "Generalized flexor spasm; bowel/bladder evacuation", purpose: "Mass discharge following severe spinal cord injury" },
+  { name: "Coitus reflex", sys: "Spinal", receptor: "Tactile receptors in glans/genitals", center: "Spinal cord", nucleus: "Onuf's nucleus (S2-S4); sacral parasympathetic nucleus", stimulus: "Stimulation of the glans penis or genitals", response: "Penile stiffening and genital skin contraction", purpose: "Essential components for reproductive function" },
+  { name: "Baroreceptor reflex", sys: "Cardiovascular", receptor: "Baroreceptors (carotid sinus & aortic arch)", center: "Medulla & hypothalamus", nucleus: "NTS -> Nucleus ambiguus & DVMN; RVLM", stimulus: "Increased arterial blood pressure", response: "Vasodilation; decreased heart rate and contractility", purpose: "Rapid short-term regulation of blood pressure" },
+  { name: "Bainbridge reflex", sys: "Cardiovascular", receptor: "Stretch receptors in the atrial wall", center: "Medulla", nucleus: "NTS -> DVMN; sympathetic premotor neurons", stimulus: "Increased venous return (atrial stretch)", response: "Increased heart rate (tachycardia)", purpose: "Prevents damming of blood in the veins and atria" },
+  { name: "Cushing's reflex", sys: "Cardiovascular", receptor: "CNS ischemic sensors", center: "Vasomotor center (medulla)", nucleus: "Rostral ventrolateral medulla (RVLM)", stimulus: "Increased intracranial pressure (brain ischemia)", response: "Intense rise in systemic arterial pressure", purpose: "Protects vital brain centers from ischemia" },
+  { name: "Exercise pressor reflex", sys: "Cardiovascular", receptor: "Mechanoreceptors and metaboreceptors in muscle", center: "Brainstem (NTS, RVLM, CVLM)", nucleus: "NTS -> RVLM (excitatory) & CVLM (inhibitory)", stimulus: "Muscle contraction and accumulation of metabolites", response: "Increased heart rate, blood pressure, and resistance", purpose: "Optimizes cardiovascular delivery to active muscles" },
+  { name: "Axon reflex", sys: "Cardiovascular", receptor: "Cutaneous sensory endings", center: "Peripheral - no CNS center", nucleus: "None (antidromic conduction along sensory axon collaterals)", stimulus: "Firm stroke or local skin injury", response: "Local arteriolar dilation (flare)", purpose: "Increases local blood flow for protection and healing" },
+  { name: "Somatosympathetic reflex", sys: "Cardiovascular", receptor: "Nociceptors or proprioceptors", center: "Vasomotor center (medulla)", nucleus: "RVLM -> intermediolateral cell column (IML, T1-L2)", stimulus: "Intense pain or proprioceptive stimulation", response: "Increased systemic blood pressure", purpose: "Adjusts cardiovascular status in response to somatic stress" },
+  { name: "Chemoreceptor reflex", sys: "Respiratory", receptor: "Chemoreceptors (carotid & aortic bodies)", center: "Medullary respiratory centers", nucleus: "Pre-Botzinger complex; NTS; DRG/VRG", stimulus: "Hypoxia, hypercapnia, or acidosis", response: "Increased rate and depth of respiration", purpose: "Homeostatic correction of blood gas and pH imbalances" },
+  { name: "Hering-Breuer inflation reflex", sys: "Respiratory", receptor: "Slowly adapting stretch receptors (SARs) in airways", center: "Medullary respiratory centers", nucleus: "NTS (pump cells) -> Botzinger complex -> DRG/VRG", stimulus: "Large lung inflation (tidal volume > normal)", response: "Halts inspiration; triggers expiration", purpose: "Prevents lung over-inflation" },
+  { name: "Hering-Breuer deflation reflex", sys: "Respiratory", receptor: "Rapidly adapting stretch receptors in lungs", center: "Medulla", nucleus: "NTS -> Pre-Botzinger complex (inspiratory rhythm generator)", stimulus: "Excessive lung deflation", response: "Shortens expiration; triggers inspiration", purpose: "Protective mechanism against excessive lung deflation" },
+  { name: "J (juxtacapillary) reflex", sys: "Respiratory", receptor: "J receptors in alveolar walls", center: "Medulla", nucleus: "NTS -> respiratory & cardiovascular control nuclei", stimulus: "Pulmonary congestion or chemical irritants", response: "Rapid shallow breathing; bradycardia; hypotension", purpose: "Protective response during pulmonary edema or congestion" },
+  { name: "Cough reflex", sys: "Respiratory", receptor: "Irritant receptors in trachea and bronchi", center: "Medulla", nucleus: "NTS (cough pattern generator) -> Nucleus ambiguus; phrenic nucleus", stimulus: "Irritation of lower respiratory airways", response: "Forced expiration against closed glottis, then sudden opening", purpose: "Expels foreign bodies or excess mucus from airways" },
+  { name: "Sneeze reflex", sys: "Respiratory", receptor: "Nasopharyngeal mechanoreceptors", center: "Medulla", nucleus: "NTS; trigeminal sensory nucleus (V) -> VRG; facial nucleus (VII)", stimulus: "Irritation of the nasal mucosa", response: "Same as cough, but glottis remains open", purpose: "Expels irritating substances from the nasal passages" },
+  { name: "Micturition reflex", sys: "Visceral", receptor: "Stretch receptors in the bladder wall", center: "Spinal cord (sacral S2-S4)", nucleus: "Sacral parasympathetic nucleus; Onuf's nucleus; Pontine micturition centre (Barrington's nucleus)", stimulus: "Filling and stretching of the urinary bladder", response: "Detrusor contraction; internal sphincter relaxation", purpose: "Automatic emptying of the urinary bladder" },
+  { name: "Defecation reflex (intrinsic)", sys: "Visceral", receptor: "Myenteric plexus (ENS) in the rectal wall", center: "Local enteric nervous system", nucleus: "Myenteric plexus (Auerbach's plexus)", stimulus: "Distention of the rectal wall by feces", response: "Peristalsis in colon/rectum; internal sphincter relaxation", purpose: "Initial weak signal to facilitate bowel emptying" },
+  { name: "Defecation reflex (parasympathetic)", sys: "Visceral", receptor: "Stretch receptors in the rectal wall", center: "Spinal cord (sacral S3)", nucleus: "Sacral parasympathetic nucleus (S3) -> pelvic splanchnic nerves", stimulus: "Distention of the rectal wall", response: "Powerful colonic contractions; internal sphincter relaxation", purpose: "Efficient and powerful expulsion of feces" },
+  { name: "Enterogastric reflex", sys: "Visceral", receptor: "Mechanoreceptors/chemoreceptors in duodenum", center: "Prevertebral ganglia & brainstem", nucleus: "Celiac & superior mesenteric ganglia; NTS -> DVMN", stimulus: "Duodenal distension, acid, or high osmolality", response: "Inhibition of gastric motility and secretion", purpose: "Regulates the rate of gastric emptying into the duodenum" },
+  { name: "Gastrocolic reflex", sys: "Visceral", receptor: "Mechanoreceptors in the stomach", center: "Prevertebral ganglia & ENS", nucleus: "Inferior mesenteric ganglion; myenteric plexus (Auerbach's)", stimulus: "Accumulation of food/distension in the stomach", response: "Increased colonic motility (mass peristalsis)", purpose: "Facilitates colonic evacuation after a meal" },
+  { name: "Gastroileal reflex", sys: "Visceral", receptor: "Mechanoreceptors in stomach", center: "Vagus nerve or prevertebral ganglia", nucleus: "Dorsal motor nucleus of vagus (DVMN); celiac ganglion", stimulus: "Stretching of the stomach wall by food", response: "Enhanced ileal motility; ileocecal sphincter relaxation", purpose: "Facilitates movement of ileal contents into the colon" },
+  { name: "Intestino-intestinal reflex", sys: "Visceral", receptor: "Gut wall mechanoreceptors", center: "Local ENS or spinal cord", nucleus: "Myenteric plexus; prevertebral ganglia; spinal interneurons", stimulus: "Over-distension of a segment of intestine", response: "Relaxation of the rest of the intestine", purpose: "Prevents overdistension and potential injury" },
+  { name: "Colonocolonic reflex", sys: "Visceral", receptor: "Colonic mechanoreceptors", center: "ENS or prevertebral ganglia", nucleus: "Myenteric plexus; inferior mesenteric ganglion", stimulus: "Distention of one part of the colon", response: "Relaxation of the entire colon", purpose: "Facilitates colonic filling and movement" },
+  { name: "Colonoileal reflex", sys: "Visceral", receptor: "Colonic receptors", center: "Prevertebral ganglia", nucleus: "Inferior mesenteric ganglion -> ileal myenteric plexus", stimulus: "Distention of the colon", response: "Inhibition of ileal emptying into the colon", purpose: "Prevents backflow and overfilling of the colon" },
+  { name: "Peristaltic (myenteric) reflex", sys: "Visceral", receptor: "Gut wall mechanoreceptors", center: "Myenteric plexus (ENS)", nucleus: "Myenteric plexus (Auerbach's) - ascending excitatory / descending inhibitory interneurons", stimulus: "Distension of a gut segment", response: "Contractile ring orad; receptive relaxation aborad", purpose: "Propels intestinal contents in an anal direction" },
+  { name: "Deglutition (swallowing) reflex", sys: "Visceral", receptor: "Receptors around pharyngeal opening", center: "Medulla", nucleus: "NTS -> Nucleus ambiguus; DVMN", stimulus: "Bolus of food touching the pharynx", response: "Sequential automatic pharyngeal and esophageal contractions", purpose: "Safely propels food from mouth to esophagus" },
+  { name: "Chewing (mastication) reflex", sys: "Visceral", receptor: "Mechanoreceptors in mouth", center: "Brainstem reticular areas", nucleus: "Trigeminal motor nucleus (V); masticatory pattern generator (reticular formation)", stimulus: "Presence of a food bolus in the mouth", response: "Cyclic rhythmic chewing movements", purpose: "Mechanical breakdown of food for swallowing" },
+  { name: "Taste-salivary reflex", sys: "Visceral", receptor: "Taste bud chemoreceptors", center: "Medulla", nucleus: "NTS -> Superior salivatory nucleus (VII) & Inferior salivatory nucleus (IX)", stimulus: "Arrival of tastant molecules at taste buds", response: "Reflexive salivary secretion", purpose: "Facilitates initial digestion and protects mucosa" },
+  { name: "Milk ejection reflex", sys: "Endocrine", receptor: "Tactile receptors in/around the nipple", center: "Hypothalamus", nucleus: "Supraoptic nucleus (SON) & Paraventricular nucleus (PVN)", stimulus: "Suckling stimulus from the infant", response: "Oxytocin release; myoepithelial cell contraction", purpose: "Expels milk from breast alveoli into the ducts for feeding" },
+  { name: "Pupillary light reflex", sys: "Brainstem", receptor: "Retinal photoreceptors (rods & cones)", center: "Midbrain", nucleus: "Olivary pretectal nucleus -> Edinger-Westphal nucleus (CN III)", stimulus: "Bright light striking the retina", response: "Pupillary constriction (sphincter pupillae)", purpose: "Protects the retina and aids in light adaptation" },
+  { name: "Consensual light reflex", sys: "Brainstem", receptor: "Retinal photoreceptors (one eye)", center: "Midbrain", nucleus: "Olivary pretectal nucleus -> bilateral Edinger-Westphal nuclei", stimulus: "Light shone in only one eye", response: "Pupillary constriction in the opposite eye", purpose: "Aids in bilateral light adaptation" },
+  { name: "Accommodation reflex", sys: "Brainstem", receptor: "Retinal photoreceptors", center: "Visual cortex & midbrain", nucleus: "Visual cortex -> Edinger-Westphal nucleus; oculomotor nucleus (CN III)", stimulus: "Shifting gaze from far to near object", response: "Lens thickening; pupillary constriction; convergence", purpose: "Maintains clear focus on objects close to the eyes" },
+  { name: "Tympanic (acoustic) reflex", sys: "Brainstem", receptor: "Hair cells in the inner ear", center: "Brainstem", nucleus: "Cochlear nucleus -> facial nucleus (VII) & trigeminal motor nucleus (V)", stimulus: "Prolonged loud noise", response: "Contraction of tensor tympani and stapedius muscles", purpose: "Dampens ossicular vibration to protect the inner ear" },
+  { name: "Labyrinthine righting reflex", sys: "Brainstem", receptor: "Otolith organs in the vestibular apparatus", center: "Midbrain", nucleus: "Vestibular nuclei (Deiters') -> superior colliculus -> cervical motor neurons", stimulus: "Tilting of the head relative to gravity", response: "Reflexive contraction of neck muscles", purpose: "Restores and maintains head in an upright level position" },
+  { name: "Vestibulo-ocular reflex (VOR)", sys: "Brainstem", receptor: "Semicircular canal hair cells", center: "Brainstem", nucleus: "Medial & superior vestibular nuclei -> Abducens nucleus (VI); Oculomotor nucleus (III) via MLF", stimulus: "Rotation of the head", response: "Eyes rotate equal and opposite to head movement", purpose: "Stabilizes the visual image on the retina during movement" },
+  { name: "Vestibulocollic reflex", sys: "Brainstem", receptor: "Vestibular apparatus", center: "Brainstem", nucleus: "Medial vestibular nucleus -> medial vestibulospinal tract -> cervical motor neurons", stimulus: "Vestibular stimulation from head movement", response: "Contraction of head and neck muscles", purpose: "Maintains head position stability during movement" },
+  { name: "Tonic neck reflex", sys: "Brainstem", receptor: "Proprioceptors in neck muscles", center: "Medulla", nucleus: "Medial vestibular nucleus; cervical dorsal horn interneurons", stimulus: "Change in head position relative to the body", response: "Altered distribution of limb muscle tone", purpose: "Supports posture in response to head orientation changes" },
+  { name: "Corneal reflex", sys: "Brainstem", receptor: "Cornea (trigeminal nerve V)", center: "Pons (brainstem)", nucleus: "Trigeminal sensory nucleus (V) -> Facial nucleus (VII) bilaterally", stimulus: "Touching or irritating the cornea", response: "Immediate blinking and eyelid closure", purpose: "Protects the surface of the eye from injury" },
+  { name: "Gag (pharyngeal) reflex", sys: "Brainstem", receptor: "Posterior pharynx (glossopharyngeal IX)", center: "Medulla", nucleus: "NTS -> Nucleus ambiguus (IX/X)", stimulus: "Physical stimulation of the posterior pharynx", response: "Contraction of the pharyngeal muscles", purpose: "Protects the airway from entry of foreign materials" },
+  { name: "Vomiting reflex", sys: "Brainstem", receptor: "Chemoreceptors (area postrema) or gut receptors", center: "Medulla", nucleus: "Area postrema (CTZ) -> NTS -> Nucleus ambiguus & DVMN; phrenic nucleus", stimulus: "Drugs, hormones, toxins, or pharyngeal irritation", response: "Abdominal/diaphragm contraction; reverse peristalsis", purpose: "Expels harmful or irritating substances from the GIT" },
+  { name: "Grasp reflex", sys: "Brainstem", receptor: "Palmar or plantar tactile receptors", center: "Midbrain", nucleus: "Red nucleus; corticospinal motor neurons (suppressed postnatally)", stimulus: "Object touching the palm or sole", response: "Reflexive extension and grasping of the object", purpose: "Primitive reflex aiding in standing and postural support" },
+  { name: "Vestibular placing reaction", sys: "Brainstem", receptor: "Vestibular receptors", center: "Midbrain", nucleus: "Lateral vestibular nucleus (Deiters') -> lateral vestibulospinal tract", stimulus: "Rapid downward linear acceleration", response: "Forelimb extension and toe spreading", purpose: "Assists the body in landing steadily on the ground" },
+  { name: "Neck righting reflex", sys: "Brainstem", receptor: "Neck muscle spindles", center: "Midbrain", nucleus: "Superior colliculus; vestibular nuclei -> cervical & thoracic motor neurons", stimulus: "Stretching of neck muscles when head is turned", response: "Sequential righting of shoulders, thorax, and pelvis", purpose: "Aligns the rest of the body with the head position" },
+  { name: "Body on head righting reflex", sys: "Brainstem", receptor: "Side-of-body exteroceptors", center: "Midbrain", nucleus: "Superior colliculus; interstitial nucleus of Cajal", stimulus: "Pressure on the side of the body", response: "Reflexive righting of the head", purpose: "Restores the head to an upright position" },
+  { name: "Body on body righting reflex", sys: "Brainstem", receptor: "Side-of-body exteroceptors", center: "Midbrain", nucleus: "Superior colliculus; interstitial nucleus of Cajal -> spinal motor neurons", stimulus: "Pressure on the side of the body", response: "Righting of the body even if head is tilted", purpose: "Restores body orientation relative to the ground" },
+  { name: "Limb righting reflex", sys: "Brainstem", receptor: "Limb muscle spindles", center: "Midbrain", nucleus: "Red nucleus (rubrospinal tract); vestibular nuclei", stimulus: "Stretching of limb muscles", response: "Righting of the entire body", purpose: "Assists in general postural correction" },
+  { name: "Optical righting reflex", sys: "Brainstem", receptor: "Visual receptors", center: "Visual cortex & midbrain", nucleus: "Visual cortex -> superior colliculus -> interstitial nucleus of Cajal", stimulus: "Visual perception of a tilted horizon", response: "Righting of the head", purpose: "Uses visual cues to maintain an upright head level" },
+  { name: "Hopping and placing reactions", sys: "Brainstem", receptor: "Tactile and proprioceptive receptors", center: "Cerebral cortex", nucleus: "Sensorimotor cortex (areas 1, 2, 3) -> corticospinal tract", stimulus: "Lateral push or displacement", response: "Corrective steps or firm foot placement", purpose: "Maintenance of a stable body position when pushed" },
+];
+
+const DETAIL_SYS_ORDER = ["Spinal", "Cardiovascular", "Respiratory", "Visceral", "Endocrine", "Brainstem"];
+
+const DETAIL_SYS_COLORS = {
+  Spinal: { bg: "#E1F5EE", color: "#085041" },
+  Cardiovascular: { bg: "#FCEBEB", color: "#791F1F" },
+  Respiratory: { bg: "#E6F1FB", color: "#0C447C" },
+  Visceral: { bg: "#FAEEDA", color: "#633806" },
+  Endocrine: { bg: "#FBEAF0", color: "#72243E" },
+  Brainstem: { bg: "#EEEDFE", color: "#3C3489" },
+};
+
+function highlightMatch(text, q) {
+  if (!q) return text;
+  const safe = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const parts = text.split(new RegExp(`(${safe})`, "gi"));
+  return parts.map((part, i) =>
+    part.toLowerCase() === q.toLowerCase()
+      ? <mark key={i} style={{ background: "rgba(255,200,0,.4)", borderRadius: 2, padding: 0 }}>{part}</mark>
+      : part
+  );
+}
+
+function DetailReflexCard({ reflex, query }) {
+  const [open, setOpen] = useState(false);
+  const col = DETAIL_SYS_COLORS[reflex.sys];
+
+  return (
+    <div
+      onClick={() => setOpen(o => !o)}
+      style={{
+        background: "var(--color-background-primary)",
+        border: "0.5px solid var(--color-border-tertiary)",
+        borderRadius: "var(--border-radius-lg)",
+        padding: "0.875rem 1.125rem",
+        cursor: "pointer",
+        transition: "border-color 0.15s",
+      }}
+      onMouseEnter={e => e.currentTarget.style.borderColor = "var(--color-border-secondary)"}
+      onMouseLeave={e => e.currentTarget.style.borderColor = "var(--color-border-tertiary)"}
+    >
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+        <p style={{ margin: 0, fontSize: 13.5, fontWeight: 600, color: "var(--color-text-primary)" }}>
+          {highlightMatch(reflex.name, query)}
+        </p>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+          <span style={{ fontSize: 11, padding: "2px 9px", borderRadius: 20, background: col.bg, color: col.color, fontWeight: 500, whiteSpace: "nowrap" }}>
+            {reflex.sys}
+          </span>
+          <span style={{ fontSize: 13, color: "var(--color-text-tertiary)", display: "inline-block", transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>▾</span>
+        </div>
+      </div>
+
+      {open && (
+        <div style={{ marginTop: 10, borderTop: "0.5px solid var(--color-border-tertiary)", paddingTop: 10, display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: "8px 16px" }}>
+          {[
+            ["Receptor", reflex.receptor],
+            ["Center", reflex.center],
+            ["Stimulus", reflex.stimulus],
+            ["Response", reflex.response],
+          ].map(([label, val]) => (
+            <div key={label}>
+              <div style={{ fontSize: 11, color: "var(--color-text-tertiary)", marginBottom: 2 }}>{label}</div>
+              <div style={{ fontSize: 13, color: "var(--color-text-primary)", lineHeight: 1.5 }}>{highlightMatch(val, query)}</div>
+              {label === "Center" && (
+                <div style={{ fontSize: 12, color: "var(--color-text-secondary)", fontStyle: "italic", marginTop: 2, lineHeight: 1.4 }}>
+                  {highlightMatch(reflex.nucleus, query)}
+                </div>
+              )}
+            </div>
+          ))}
+          <div style={{ gridColumn: "1 / -1" }}>
+            <div style={{ fontSize: 11, color: "var(--color-text-tertiary)", marginBottom: 2 }}>Purpose</div>
+            <div style={{ fontSize: 13, color: "var(--color-text-secondary)", fontStyle: "italic", lineHeight: 1.5 }}>
+              {highlightMatch(reflex.purpose, query)}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ReflexDetailsExplorer() {
+  const [query, setQuery] = useState("");
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return DETAIL_REFLEXES.filter(r => {
+      const matchSys = activeFilter === "All" || r.sys === activeFilter;
+      const matchQ = !q || [r.name, r.receptor, r.center, r.nucleus, r.stimulus, r.response, r.purpose]
+        .some(f => f.toLowerCase().includes(q));
+      return matchSys && matchQ;
+    });
+  }, [query, activeFilter]);
+
+  const filters = ["All", ...DETAIL_SYS_ORDER];
+
+  return (
+    <div>
+      <input
+        type="search"
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        placeholder="Search reflexes, receptors, nuclei..."
+        style={{
+          width: "100%",
+          boxSizing: "border-box",
+          padding: "8px 12px",
+          border: "0.5px solid var(--color-border-secondary)",
+          borderRadius: "var(--border-radius-md)",
+          fontSize: 14,
+          outline: "none",
+          marginBottom: "1rem",
+          background: "var(--color-background-primary)",
+          color: "var(--color-text-primary)",
+        }}
+      />
+
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: "1.25rem" }}>
+        {filters.map(f => {
+          const active = f === activeFilter;
+          const col = DETAIL_SYS_COLORS[f];
+          return (
+            <button
+              key={f}
+              onClick={() => setActiveFilter(f)}
+              style={{
+                padding: "4px 12px",
+                borderRadius: 20,
+                fontSize: 12,
+                cursor: "pointer",
+                border: active ? `1.5px solid ${col ? col.color : "var(--color-text-primary)"}` : "0.5px solid var(--color-border-tertiary)",
+                background: active ? (col ? col.bg : "var(--color-background-secondary)") : "var(--color-background-primary)",
+                color: active ? (col ? col.color : "var(--color-text-primary)") : "var(--color-text-secondary)",
+                fontWeight: active ? 600 : 400,
+                transition: "all 0.15s",
+              }}
+            >
+              {f}
+            </button>
+          );
+        })}
+      </div>
+
+      <p style={{ fontSize: 12, color: "var(--color-text-tertiary)", marginBottom: "0.75rem" }}>
+        {filtered.length} of {DETAIL_REFLEXES.length} reflexes
+      </p>
+
+      {filtered.length === 0 ? (
+        <p style={{ textAlign: "center", color: "var(--color-text-tertiary)", fontSize: 14, padding: "2rem 0" }}>
+          No reflexes match your search.
+        </p>
+      ) : (
+        <div style={{ display: "grid", gap: 8 }}>
+          {filtered.map(r => (
+            <DetailReflexCard key={r.name} reflex={r} query={query.trim().toLowerCase()} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -265,7 +486,7 @@ export default function App() {
     wrap: { fontFamily: "var(--font-sans)", padding: "1rem 0" },
     searchRow: { display: "flex", gap: 8, marginBottom: 12 },
     input: { flex: 1, padding: "8px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: "var(--border-radius-md)", background: "var(--color-background-primary)", color: "var(--color-text-primary)", fontSize: 14, outline: "none" },
-    modeBtns: { display: "flex", gap: 6 },
+    modeBtns: { display: "flex", flexWrap: "wrap", gap: 6 },
     modeBtn: (active) => ({ padding: "7px 14px", border: "0.5px solid var(--color-border-secondary)", borderRadius: "var(--border-radius-md)", background: active ? "var(--color-background-tertiary)" : "var(--color-background-primary)", color: active ? "var(--color-text-primary)" : "var(--color-text-secondary)", fontWeight: active ? 500 : 400, fontSize: 13, cursor: "pointer" }),
     cats: { display: "flex", flexWrap: "wrap", gap: 6, marginBottom: "1rem" },
     catBtn: (active) => ({ padding: "5px 11px", border: `0.5px solid ${active ? "var(--color-border-primary)" : "var(--color-border-tertiary)"}`, borderRadius: 20, background: active ? "var(--color-background-secondary)" : "var(--color-background-primary)", color: active ? "var(--color-text-primary)" : "var(--color-text-secondary)", fontWeight: active ? 500 : 400, fontSize: 12, cursor: "pointer" }),
@@ -306,19 +527,26 @@ export default function App() {
     <div style={s.wrap}>
       {/* top controls */}
       <div style={s.searchRow}>
-        <input style={s.input} placeholder="Search names, definitions…" value={search} onChange={e => setSearch(e.target.value)} />
+        {mode === "reflexDetails" ? (
+          <div style={{ ...s.input, cursor: "default", color: "var(--color-text-secondary)" }}>Detailed reflex explorer</div>
+        ) : (
+          <input style={s.input} placeholder="Search names, definitions…" value={search} onChange={e => setSearch(e.target.value)} />
+        )}
         <div style={s.modeBtns}>
           <button style={s.modeBtn(mode === "browse")} onClick={() => handleModeChange("browse")}>Browse</button>
           <button style={s.modeBtn(mode === "quiz")} onClick={() => handleModeChange("quiz")}>Quiz</button>
+          <button style={s.modeBtn(mode === "reflexDetails")} onClick={() => handleModeChange("reflexDetails")}>Reflex Details</button>
         </div>
       </div>
-      <div style={s.cats}>
-        {CATS.filter(c => c === "All" || DATA.some(d => d.cat === c)).map(c => (
-          <button key={c} style={s.catBtn(c === activeCat)} onClick={() => setActiveCat(c)}>
-            {c === "All" ? `All (${DATA.length})` : c}
-          </button>
-        ))}
-      </div>
+      {mode !== "reflexDetails" && (
+        <div style={s.cats}>
+          {CATS.filter(c => c === "All" || DATA.some(d => d.cat === c)).map(c => (
+            <button key={c} style={s.catBtn(c === activeCat)} onClick={() => setActiveCat(c)}>
+              {c === "All" ? `All (${DATA.length})` : c}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* BROWSE */}
       {mode === "browse" && (
@@ -384,6 +612,8 @@ export default function App() {
           )}
         </div>
       )}
+
+      {mode === "reflexDetails" && <ReflexDetailsExplorer />}
 
       {/* MODAL */}
       {modal && (
